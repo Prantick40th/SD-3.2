@@ -1,0 +1,205 @@
+using System;
+using System.Collections.Generic;
+
+namespace lab1
+{
+    class One
+    {
+        public void trace(int row, int col, int[,] ara)
+        {
+            int trace = 0;
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < col; j++)
+                {
+                    if (i == j)
+                        trace += ara[i, j];
+                }
+            }
+
+            Console.WriteLine("Trace = " + trace);
+            Console.ReadLine();
+        }
+
+        public static double DET(int n, double[,] Mat)
+        {
+            double d = 0;
+            int k, i, j, subi, subj;
+            double[,] SUBMat = new double[n, n];
+
+            if (n == 2)
+            {
+                return ((Mat[0, 0] * Mat[1, 1]) - (Mat[1, 0] * Mat[0, 1]));
+            }
+
+            else
+            {
+                for (k = 0; k < n; k++)
+                {
+                    subi = 0;
+                    for (i = 1; i < n; i++)
+                    {
+                        subj = 0;
+                        for (j = 0; j < n; j++)
+                        {
+                            if (j == k)
+                            {
+                                continue;
+                            }
+                            SUBMat[subi, subj] = Mat[i, j];
+                            subj++;
+                        }
+                        subi++;
+                    }
+                    d = d + (Math.Pow(-1, k) * Mat[0, k] * DET(n - 1, SUBMat));
+                }
+            }
+            return d;
+        }
+
+
+        class Two
+        {
+            public void solve()
+            {
+                Console.Write("Enter a Word : ");
+                string word = Console.ReadLine();
+                string store = string.Empty;
+
+                foreach (char ch in word)
+                {
+                    if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9'))
+                        store += ch;
+                }
+
+                char[] keyVal = store.ToCharArray();
+                Array.Reverse(keyVal);
+
+                String reversed = new string(keyVal);
+
+                if (store.Equals(reversed, StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine("It's a Palindrome");
+                    Console.ReadLine();
+                }
+                else
+                {
+                    Console.WriteLine("Not a Palindrome");
+                    Console.ReadLine();
+                }
+            }
+        }
+
+
+        class Three
+        {
+            public void solve()
+            {
+                var theoryCourseList = new List<string>();
+
+                theoryCourseList.Add("CSE 3211");
+                theoryCourseList.Add("CSE 3213");
+                theoryCourseList.Add("CSE 3215");
+                theoryCourseList.Add("CSE 3223");
+                theoryCourseList.Add("HUM 3207");
+
+
+                Console.WriteLine();
+
+                foreach (var CourseLists in theoryCourseList)
+                {
+                    Console.WriteLine(CourseLists);
+                }
+                Console.WriteLine();
+
+                theoryCourseList.Remove("HUM 3207");
+
+                foreach (var CourseLists in theoryCourseList)
+                {
+                    Console.WriteLine(CourseLists);
+                }
+                Console.WriteLine();
+
+                var sessionalCourseList = new List<string>();
+
+                sessionalCourseList.Add("CSE 3200");
+                sessionalCourseList.Add("CSE 3214");
+                sessionalCourseList.Add("CSE 3216");
+                sessionalCourseList.Add("CSE 3224");
+
+                Console.WriteLine("Added List : ");
+
+                theoryCourseList.InsertRange(0, sessionalCourseList);
+
+
+                foreach (var CourseLists in theoryCourseList)
+                {
+                    Console.WriteLine(CourseLists);
+                }
+                Console.WriteLine();
+                Console.ReadLine();
+
+            }
+        }
+
+
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                Console.WriteLine("Assignmnet 1");
+                Console.ReadLine();
+
+                //Three ob3 = new Three();
+                //ob3.solve();
+
+                //Two ob2 = new Two();
+                // ob2.solve();
+
+
+
+
+                int i = 0, j = 0;
+                int row, col;
+
+                int[,] ara = new int[50, 50];
+
+                string val;
+                Console.WriteLine("Enter row number : ");
+                val = Console.ReadLine();
+                row = Convert.ToInt32(val);
+                Console.WriteLine("Enter coloumn number : ");
+                val = Console.ReadLine();
+                col = Convert.ToInt32(val);
+
+                if (row != col)
+                {
+                    Console.WriteLine("Invalid input (should be a square matrix");
+                    Console.ReadLine();
+
+                }
+
+                double[,] Mat = new double[row, row]; 
+
+                Console.WriteLine("Enter array elements :");
+
+                for (i = 0; i < row; i++)
+                {
+                    for (j = 0; j < col; j++)
+                    {
+                        val = Console.ReadLine();
+                        ara[i, j] = Convert.ToInt32(val);
+                        Mat[i, j] = Convert.ToInt32(val);
+                    }
+                }
+
+                One ob1 = new One();
+                ob1.trace(row, col, ara);
+
+                Console.WriteLine("Determinant: " + DET(row, Mat));
+                Console.ReadKey(); ;
+
+            }
+        }
+    }
+}
